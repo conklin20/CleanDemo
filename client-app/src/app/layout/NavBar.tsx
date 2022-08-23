@@ -1,28 +1,38 @@
-import React from "react";
-import { Button, Container, Menu } from "semantic-ui-react";
-import { useStore } from "../stores/store";
+import React from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
+import { Button, Container, Menu } from 'semantic-ui-react';
 
 export default function NavBar() {
-    // bring in activity state
-    const { activityStore } = useStore();
+    // bring the location from the router into the component
+    const location = useLocation();
 
     return (
-        <Menu inverted fixed="top">
+        <Menu inverted fixed='top'>
             <Container>
-                <Menu.Item header>
+                {/* USEFUL */}
+                <Menu.Item as={NavLink} className={location.pathname === '/' ? 'active' : '' }  to='/' end header>
                     <img
-                        src="/assets/logo.png"
-                        alt="logo"
-                        style={{ marginRight: "10px" }}
+                        src='/assets/logo.png'
+                        alt='logo'
+                        style={{ marginRight: '10px' }}
                     />
                     Reactivities
                 </Menu.Item>
-                <Menu.Item name="Activities" />
+                <Menu.Item
+                    name='Activities'
+                    as={NavLink}
+                    to='/activities'
+                    className={location.pathname === '/activities' ? 'active' : '' }
+                    end
+                    header
+                />
                 <Menu.Item>
                     <Button
-                        onClick={() => activityStore.openForm()}
+                        as={NavLink}
+                        to='/activities/create'
                         positive
-                        content="Create Activity"
+                        className={location.pathname === '/activities/create' ? 'active' : '' }
+                        content='Create Activity'
                     />
                 </Menu.Item>
             </Container>

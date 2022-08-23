@@ -1,18 +1,28 @@
+import { observer } from 'mobx-react-lite';
 import React from 'react';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { Button, Card, Image } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
 
 
-export default function ActivityDetails() {
+export default observer( function ActivityDetails() {
     
     // bring in activity state
     const { activityStore } = useStore();
     // destructure needed properties from activityStore
-    const { cancelSelectedActivity, openForm, selectedActivity: activity } = activityStore;
+    const { selectedActivity: activity, loadActivity, loadingInitial } = activityStore;
+    // get id from params
+    const { id } = useParams<{id: string}>();
+    // const { id } = useParams(); // same as above, evidently dont need specifying type for useParams
+
+    React.useEffect(() => {
+        if(id) loadActivity(id);
+    } , [loadActivity, id]);
 
     // workaround to remove ts errors as we will never render this form if there is no selected activity (logic in ActivityDashboard)
-    if(!activity) return <LoadingComponent />;
+    if(loadingInitial || !activity) return <LoadingComponent />;
     
     return (
         <Card fluid>
@@ -28,10 +38,10 @@ export default function ActivityDetails() {
             </Card.Content>
             <Card.Content extra>
                 <Button.Group widths='2'>
-                    <Button onClick={() => openForm(activity.id)} basic color='blue' content='Edit' />
-                    <Button onClick={cancelSelectedActivity} basic color='grey' content='Cancel' />
+                    <Button as={Link} to={`/activities/manage/${activity.id}`} basic color='blue' content='Edit' />
+                    <Button as={Link} to='/activities' basic color='grey' content='Cancel' />
                 </Button.Group>
             </Card.Content>
         </Card>
     )
-}
+})
