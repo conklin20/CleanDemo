@@ -1,5 +1,5 @@
-import React from "react";
-import { Dimmer, Loader } from "semantic-ui-react";
+import React from 'react';
+import { Dimmer, Loader } from 'semantic-ui-react';
 
 interface Props {
     inverted?: boolean;
@@ -8,17 +8,16 @@ interface Props {
 
 export default function LoadingComponent({
     inverted = true,
-    content = "Loading...",
+    content = 'Loading...',
 }: Props) {
     return (
         // <React.Fragment>
-            <Dimmer active inverted={inverted}>
-                <Loader content={content} />
-            </Dimmer>
+        <Dimmer active inverted={inverted}>
+            <Loader content={content} />
+        </Dimmer>
         // </React.Fragment>
     );
 }
-
 
 /*
 #region --------------  Notes  --------------------
@@ -37,4 +36,6 @@ Warning: findDOMNode is deprecated in StrictMode. findDOMNode was passed an inst
     at Router (http://localhost:3000/static/js/bundle.js:54230:15)
     at BrowserRouter (http://localhost:3000/static/js/bundle.js:53039:5)
 #endregion -----------  Notes  --------------------
+
+ref is in C:\Users\caryc\Projects\Vista Outdoor\demos\CleanDemo\client-app\node_modules\semantic-ui-react\dist\umd\semantic-ui-react.min.js
 */

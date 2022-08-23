@@ -65,7 +65,6 @@ export default observer(function ActivityForm() {
         event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
     ) {
         const { name, value } = event.currentTarget;
-        console.log(`name: ${name}, value: ${value}`);
         setActivity({ ...activity, [name]: value });
     }
 

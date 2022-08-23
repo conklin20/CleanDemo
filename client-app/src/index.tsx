@@ -1,12 +1,16 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import "./app/layout/styles.css";
-import App from "./app/layout/App";
-import reportWebVitals from "./reportWebVitals";
-import { store, StoreContext } from "./app/stores/store";
-import { BrowserRouter } from "react-router-dom";
+import React from 'react';
+import { createRoot } from 'react-dom/client';
+//#region style sheets
+// import 'semantic-ui-css/semantic.min.css';
+import 'react-calendar/dist/Calendar.css';
+import './app/layout/styles.css';
+//#endregion
+import App from './app/layout/App';
+import reportWebVitals from './reportWebVitals';
+import { store, StoreContext } from './app/stores/store';
+import { BrowserRouter } from 'react-router-dom';
 
-const container = document.getElementById("app");
+const container = document.getElementById('app');
 const root = createRoot(container!);
 
 //provide context to the app component (our application)
