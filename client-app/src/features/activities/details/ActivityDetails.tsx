@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import { Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/stores/store';
+import ActivityDetailAside from './ActivityDetailAside';
 import ActivityDetailChat from './ActivityDetailChat';
 import ActivityDetailHeader from './ActivityDetailHeader';
 import ActivityDetailInfo from './ActivityDetailInfo';
@@ -34,7 +35,7 @@ export default observer( function ActivityDetails() {
                 <ActivityDetailChat />
             </Grid.Column>
             <Grid.Column width={6}>
-                <ActivityDetailHeader activity={activity} />
+                <ActivityDetailAside />
             </Grid.Column>
         </Grid>
     )
