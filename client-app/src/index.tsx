@@ -3,12 +3,17 @@ import { createRoot } from 'react-dom/client';
 //#region style sheets
 // import 'semantic-ui-css/semantic.min.css';
 import 'react-calendar/dist/Calendar.css';
+import 'react-toastify/dist/ReactToastify.min.css';
 import './app/layout/styles.css';
 //#endregion
 import App from './app/layout/App';
 import reportWebVitals from './reportWebVitals';
 import { store, StoreContext } from './app/stores/store';
-import { BrowserRouter } from 'react-router-dom';
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
+
+export const history = createBrowserHistory();
 
 const container = document.getElementById('app');
 const root = createRoot(container!);
@@ -17,9 +22,9 @@ const root = createRoot(container!);
 root.render(
     <React.StrictMode>
         <StoreContext.Provider value={store}>
-            <BrowserRouter>
+            <HistoryRouter history={history}>
                 <App />
-            </BrowserRouter>
+            </HistoryRouter>
         </StoreContext.Provider>
     </React.StrictMode>
 );

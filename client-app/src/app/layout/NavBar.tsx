@@ -26,6 +26,14 @@ export default function NavBar() {
                     end
                     header
                 />
+                <Menu.Item
+                    name='Errors'
+                    as={NavLink}
+                    to='/tests/errors'
+                    className={location.pathname === '/tests/errors' ? 'active' : '' }
+                    end
+                    header
+                />
                 <Menu.Item>
                     <Button
                         as={NavLink}
