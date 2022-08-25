@@ -6,6 +6,7 @@ import { makeAutoObservable, runInAction } from 'mobx';
 import agent from '../api/agent';
 import { Activity } from '../models/activity';
 import { v4 as uuid } from 'uuid';
+import { format } from 'date-fns';
 
 export default class ActivityStore {
     //#region properties
@@ -14,7 +15,7 @@ export default class ActivityStore {
     selectedActivity: Activity | undefined = undefined;
     editMode = false;
     loading = false;
-    loadingInitial = true; // changed from false to true to fix the flickering issue. see loadActivities() for other change.
+    loadingInitial = false; // changed from false to true to fix the flickering issue. see loadActivities() for other change. Changed back in section 11.
     //#endregion properties
 
     //#region constructor
@@ -34,7 +35,7 @@ export default class ActivityStore {
     //#region helper methods
     get activitiesByDate() {
         return Array.from(this.activityRegistry.values()).sort(
-            (a, b) => Date.parse(a.date) - Date.parse(b.date)
+            (a, b) => a.date!.getTime() - b.date!.getTime()
         );
     }
 
@@ -42,7 +43,7 @@ export default class ActivityStore {
     get groupedActivities() {
         return Object.entries(
             this.activitiesByDate.reduce((activities, activity) => {
-                const date = activity.date; // 2021-03-01 (date string already)
+                const date = format(activity.date!, 'dd MMM yyyy');
                 activities[date] = activities[date]
                     ? [...activities[date], activity]
                     : [activity];
@@ -56,7 +57,7 @@ export default class ActivityStore {
     };
 
     private setActivity = (activity: Activity) => {
-        activity.date = activity.date.split('T')[0];
+        activity.date = new Date(activity.date!);
         this.activityRegistry.set(activity.id, activity);
     };
     //#endregion helper methods
