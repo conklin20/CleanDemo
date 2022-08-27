@@ -8,6 +8,8 @@ using FluentValidation.AspNetCore;
 using Application.Activities;
 using FluentValidation;
 using API.Middleware;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace API
 {
@@ -22,9 +24,15 @@ namespace API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
+            services.AddControllers(options => 
+            {
+                // adds a global policy to all controllers to require authorization
+                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+                options.Filters.Add(new AuthorizeFilter(policy));
+            });
             services.AddFluentValidationAutoValidation().AddValidatorsFromAssemblyContaining<Create>();
             services.AddApplicationServices(_config);
+            services.AddIdentityService(_config);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +48,7 @@ namespace API
             app.UseHttpsRedirection();
             app.UseRouting();
             app.UseCors("CorsPolicy");
+            app.UseAuthentication(); // must be right before UseAuthorization
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
